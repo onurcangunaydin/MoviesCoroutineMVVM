@@ -3,43 +3,63 @@ package com.example.movies_coroutine_mvvm.ui
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.recyclerview.widget.AsyncListDiffer
-import androidx.recyclerview.widget.DiffUtil
+import android.widget.ImageView
+import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.example.movies_coroutine_mvvm.R
 import com.example.movies_coroutine_mvvm.data.model.Result
 
-class MoviesAdapter : RecyclerView.Adapter<MoviesAdapter.MoviesViewHolder>() {
-    inner class MoviesViewHolder(itemView: View): RecyclerView.ViewHolder(itemView)
 
-    private val differCallback = object : DiffUtil.ItemCallback<Result>(){
-        override fun areItemsTheSame(oldItem: Result, newItem: Result): Boolean {
-           return oldItem.id == oldItem.id
-        }
+class MoviesAdapter(private val resultList: MutableList<Result> = mutableListOf()): RecyclerView.Adapter<MoviesAdapter.MoviesViewHolder>() {
 
-        override fun areContentsTheSame(oldItem: Result, newItem: Result): Boolean {
-           return oldItem == newItem
+     class MoviesViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
+        val moviePoster: ImageView = itemView.findViewById(R.id.iv_movie_poster)
+        val titleTextView: TextView = itemView.findViewById(R.id.tv_title)
+
+        fun bind(result: Result){
+            titleTextView.setText(result.title)
+
+//            val requestOptions = RequestOptions()
+//                    .placeholder(R.drawable.ic_launcher_background)
+//                    .error(R.drawable.ic_launcher_background)
+
+            Glide.with(itemView.context)
+                    .load(result.posterPath)
+                    .into(moviePoster)
         }
     }
+
+     fun updateDataSet(newResultList: List<Result>){
+         resultList.clear()
+         resultList.addAll(newResultList)
+         notifyDataSetChanged()
+     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MoviesViewHolder {
         return MoviesViewHolder(
             LayoutInflater.from(parent.context).inflate(
                 R.layout.movie_item,
-                parent,
-                false
+                    parent,
+                    false
             )
         )
     }
 
     override fun onBindViewHolder(holder: MoviesViewHolder, position: Int) {
-        TODO("Not yet implemented")
-    }
+        holder.bind(resultList.get(position))
+
+        }
+
 
     override fun getItemCount(): Int {
-       return differ.currentList.size
+       return resultList.size
     }
-    val differ = AsyncListDiffer(this,differCallback)
 
 
+    private var onItemClickListener: ((Result) -> Unit)? = null
+
+    fun setOnItemClicklistener(listener: (Result) -> Unit) {
+        onItemClickListener = listener
+    }
 }
