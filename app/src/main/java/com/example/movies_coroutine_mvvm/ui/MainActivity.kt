@@ -33,7 +33,7 @@ class MainActivity : AppCompatActivity(){
     private fun setData(){
         viewModel.movie?.observe(this, Observer {
             val movieList =  it.data?.results?: emptyList()
-            adapter.updateDataSet(movieList)
+            adapter.submitList(movieList)
         })
     }
     private fun setViewModel(){
