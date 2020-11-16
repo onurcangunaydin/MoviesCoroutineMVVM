@@ -18,7 +18,7 @@ class MainActivity : AppCompatActivity(){
         setContentView(R.layout.activity_main)
         setViewModel()
     }
-     //kullanicin gordugu ui baslatildigi yer.
+
     override fun onStart() {
         super.onStart()
         setData()
@@ -39,7 +39,7 @@ class MainActivity : AppCompatActivity(){
     private fun setViewModel(){
         val viewModelFactory = ViewModelFactory(MoviesRepository())
         viewModel = ViewModelProvider(this,viewModelFactory).get(MovieViewModel::class.java)
-        viewModel.getMovies(1)
+        viewModel.getMovies()
     }
 }
 

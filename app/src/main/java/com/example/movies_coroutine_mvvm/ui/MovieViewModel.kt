@@ -9,22 +9,22 @@ import com.example.movies_coroutine_mvvm.util.Resource
 import kotlinx.coroutines.launch
 import retrofit2.Response
 
-class MovieViewModel(val repository: MoviesRepository) : ViewModel() {
+class MovieViewModel(private val repository: MoviesRepository) : ViewModel() {
 
     init {
-        getMovies(1)
+        getMovies()
     }
 
     val movie: MutableLiveData<Resource<MovieResponse>>? = MutableLiveData()
-    val moviesPage = 1
 
-    fun getMovies(page: Int) = viewModelScope.launch {
+    fun getMovies() = viewModelScope.launch {
         movie?.postValue(Resource.Loading())
-        val response = repository.getMovies(moviesPage)
+        val response = repository.getMovies()
         movie?.postValue(handleMovieResponse(response))
+
     }
 
-    fun handleMovieResponse(response : Response<MovieResponse>) : Resource<MovieResponse> {
+    private fun handleMovieResponse(response : Response<MovieResponse>) : Resource<MovieResponse> {
         if (response.isSuccessful) {
             response.body()?.let { resultResponse ->
                 return Resource.Success(resultResponse)

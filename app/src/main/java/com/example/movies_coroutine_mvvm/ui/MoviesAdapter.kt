@@ -21,7 +21,7 @@ class MoviesAdapter(): ListAdapter<Result, MoviesAdapter.MoviesViewHolder>(Movie
         private val titleTextView: TextView = itemView.findViewById(R.id.tv_title)
 
         fun bind(result: Result){
-            titleTextView.setText(result.title)
+            titleTextView.text = result.title
             Glide.with(itemView.context)
                 .load("https://image.tmdb.org/t/p/w342${result.posterPath}")
                 .transform(CenterCrop())
