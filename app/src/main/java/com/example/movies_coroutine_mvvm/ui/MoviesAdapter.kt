@@ -1,42 +1,34 @@
 package com.example.movies_coroutine_mvvm.ui
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.TextView
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.CenterCrop
-import com.example.movies_coroutine_mvvm.R
 import com.example.movies_coroutine_mvvm.data.model.Result
+import com.example.movies_coroutine_mvvm.databinding.ItemMoviesBinding
+import com.example.movies_coroutine_mvvm.databinding.ItemMoviesBindingImpl
 
 
 class MoviesAdapter(): ListAdapter<Result, MoviesAdapter.MoviesViewHolder>(MoviesDiffCallback()) {
 
-     class MoviesViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
-        private val moviePoster: ImageView = itemView.findViewById(R.id.iv_movie_poster)
-        private val titleTextView: TextView = itemView.findViewById(R.id.tv_title)
+     class MoviesViewHolder(private val binding: ItemMoviesBinding): RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(result: Result){
-            titleTextView.text = result.title
+         fun bind(result: Result){
+            binding.tvTitle.text = result.title
             Glide.with(itemView.context)
                 .load("https://image.tmdb.org/t/p/w342${result.posterPath}")
                 .transform(CenterCrop())
-                    .into(moviePoster)
+                    .into(binding.ivMoviePoster)
         }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MoviesViewHolder {
-       return MoviesViewHolder(
-        LayoutInflater.from(parent.context).inflate(
-                R.layout.item_movies,
-                    parent,
-                    false
-        )
-       )
+        val layoutInflater = LayoutInflater.from(parent.context)
+        val binding = ItemMoviesBindingImpl.inflate(layoutInflater,parent,false)
+        return MoviesViewHolder(binding)
     }
     override fun onBindViewHolder(holder: MoviesViewHolder, position: Int) {
         holder.bind(getItem(position))
