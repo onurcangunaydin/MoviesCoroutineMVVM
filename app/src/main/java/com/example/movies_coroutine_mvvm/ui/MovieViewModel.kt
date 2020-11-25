@@ -21,7 +21,6 @@ class MovieViewModel(private val repository: MoviesRepository) : ViewModel() {
         movie?.postValue(Resource.Loading())
         val response = repository.getMovies()
         movie?.postValue(handleMovieResponse(response))
-
     }
 
     private fun handleMovieResponse(response : Response<MovieResponse>) : Resource<MovieResponse> {
@@ -32,5 +31,4 @@ class MovieViewModel(private val repository: MoviesRepository) : ViewModel() {
         }
         return Resource.Error(response.message())
     }
-
 }

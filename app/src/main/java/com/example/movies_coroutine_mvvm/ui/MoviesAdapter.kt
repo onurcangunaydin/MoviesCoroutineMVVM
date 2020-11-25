@@ -30,10 +30,13 @@ class MoviesAdapter(): ListAdapter<Result, MoviesAdapter.MoviesViewHolder>(Movie
         val binding = ItemMoviesBindingImpl.inflate(layoutInflater,parent,false)
         return MoviesViewHolder(binding)
     }
+
     override fun onBindViewHolder(holder: MoviesViewHolder, position: Int) {
         holder.bind(getItem(position))
         }
 }
+
+
 class MoviesDiffCallback(): DiffUtil.ItemCallback<Result>(){
 
     override fun areItemsTheSame(oldItem: Result, newItem: Result): Boolean {
