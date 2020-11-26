@@ -10,18 +10,18 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.movies_coroutine_mvvm.R
-import com.example.movies_coroutine_mvvm.databinding.ActivityMainBinding
+import com.example.movies_coroutine_mvvm.databinding.FragmentMovieBinding
 import com.example.movies_coroutine_mvvm.repository.MoviesRepository
 
 class MoviesFragment : Fragment() {
 
     private lateinit var viewModel: MovieViewModel
     private lateinit var adapter: MoviesAdapter
-    private lateinit var binding: ActivityMainBinding
+    private lateinit var binding: FragmentMovieBinding
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-       binding = DataBindingUtil.inflate(inflater, R.layout.activity_main,container,false)
+       binding = DataBindingUtil.inflate(inflater, R.layout.fragment_movie,container,false)
         return binding.root
     }
 
