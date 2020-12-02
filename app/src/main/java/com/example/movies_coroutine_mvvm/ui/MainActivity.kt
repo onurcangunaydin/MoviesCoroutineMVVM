@@ -16,6 +16,7 @@ class MainActivity : AppCompatActivity(){
 
         val ft = supportFragmentManager.beginTransaction()
         ft.add(R.id.fragment_container,MoviesFragment.newInstance())
+        ft.addToBackStack(null)
         ft.commit()
     }
 }

@@ -1,9 +1,11 @@
 package com.example.movies_coroutine_mvvm.data.api
 
 import com.example.movies_coroutine_mvvm.data.model.MovieResponse
+import com.example.movies_coroutine_mvvm.data.model.Result
 import com.example.movies_coroutine_mvvm.util.Constans.Companion.API_KEY
 import retrofit2.Response
 import retrofit2.http.GET
+import retrofit2.http.Path
 import retrofit2.http.Query
 
 interface MovieApi {
@@ -14,4 +16,9 @@ interface MovieApi {
         @Query("api_key")
         apiKey: String = API_KEY
     ) : Response<MovieResponse>
+
+    @GET("/3/movie/{id}")
+    suspend fun getMovieDetail(
+            @Path("id") id: Int?
+    ) : Response<Result>
 }

@@ -14,7 +14,7 @@ import com.example.movies_coroutine_mvvm.databinding.ItemMoviesBindingImpl
 
 class MoviesAdapter(): ListAdapter<Result, MoviesAdapter.MoviesViewHolder>(MoviesDiffCallback()) {
 
-     class MoviesViewHolder(private val binding: ItemMoviesBinding): RecyclerView.ViewHolder(binding.root) {
+     class MoviesViewHolder( val binding: ItemMoviesBinding): RecyclerView.ViewHolder(binding.root) {
 
          fun bind(result: Result){
             binding.tvTitle.text = result.title
@@ -23,7 +23,7 @@ class MoviesAdapter(): ListAdapter<Result, MoviesAdapter.MoviesViewHolder>(Movie
                 .transform(CenterCrop())
                     .into(binding.ivMoviePoster)
         }
-    }
+     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MoviesViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
@@ -33,9 +33,11 @@ class MoviesAdapter(): ListAdapter<Result, MoviesAdapter.MoviesViewHolder>(Movie
 
     override fun onBindViewHolder(holder: MoviesViewHolder, position: Int) {
         holder.bind(getItem(position))
-        }
-}
+        holder.binding.root.setOnClickListener {
 
+        }
+    }
+}
 
 class MoviesDiffCallback(): DiffUtil.ItemCallback<Result>(){
 
@@ -43,6 +45,7 @@ class MoviesDiffCallback(): DiffUtil.ItemCallback<Result>(){
         return oldItem.id == newItem.id
 
     }
+
     override fun areContentsTheSame(oldItem: Result, newItem: Result): Boolean {
         return oldItem == newItem
     }
