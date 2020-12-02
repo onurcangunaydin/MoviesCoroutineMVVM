@@ -6,7 +6,7 @@
     <data>
         <variable
             name="movies"
-            type="com.example.movies_coroutine_mvvm.data.model.Result"/>
+            type="com.example.movies_coroutine_mvvm.data.model.Movie"/>
     </data>
 
 <androidx.cardview.widget.CardView

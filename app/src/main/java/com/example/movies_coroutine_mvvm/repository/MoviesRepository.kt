@@ -6,6 +6,6 @@ class MoviesRepository {
     suspend fun getMovies() =
             RetrofitInstance.api.getMovies(page = 2)
 
-    suspend fun getMoviesDetail(id: Int?) =
+    suspend fun getMovieDetail(id: Int) =
             RetrofitInstance.api.getMovieDetail(id = id)
 }
