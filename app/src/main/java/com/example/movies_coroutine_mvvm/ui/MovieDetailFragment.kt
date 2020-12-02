@@ -14,7 +14,6 @@ import com.example.movies_coroutine_mvvm.data.model.Movie
 import com.example.movies_coroutine_mvvm.databinding.FragmentMovieDetailBinding
 import com.example.movies_coroutine_mvvm.repository.MoviesRepository
 import kotlinx.android.synthetic.main.fragment_movie_detail.*
-import kotlinx.android.synthetic.main.item_movies.*
 
 class MovieDetailFragment(): Fragment() {
 
@@ -57,7 +56,7 @@ class MovieDetailFragment(): Fragment() {
         val poster_path = "${getString(R.string.base_image_path)}${movie.posterPath}"
         Glide.with(this)
                 .load(poster_path)
-                .into(iv_movie_poster)
+                .into(iv_poster)
 
         tv_release_date.text = movie.releaseDate
         label_vote.text = getString(R.string.label_votes,movie.voteCount.toString())

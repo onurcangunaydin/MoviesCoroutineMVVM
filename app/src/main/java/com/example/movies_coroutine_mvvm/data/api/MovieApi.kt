@@ -19,6 +19,8 @@ interface MovieApi {
 
     @GET("/3/movie/{id}")
     suspend fun getMovieDetail(
-            @Path("id") id: Int?
+        @Path("id") id: Int?,
+        @Query("api_key")
+        apiKey: String = API_KEY
     ) : Response<Movie>
 }

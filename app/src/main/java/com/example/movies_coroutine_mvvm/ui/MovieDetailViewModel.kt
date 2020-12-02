@@ -18,10 +18,8 @@ class MovieDetailViewModel(private val repository: MoviesRepository) : ViewModel
     fun getDetailMovies(id: Int?) = viewModelScope.launch {
         movieDetail.postValue(Resource.Loading())
         if (id != null){
-            Log.e(TAG,"Detail Id = $id")
             val response = repository.getMovieDetail(id)
             movieDetail.postValue(handleMovieDetailResponse(response))
-            Log.e(TAG, "Response = ${response.body()}")
         }else{
             Log.e(TAG,"Detail Id null")
         }
