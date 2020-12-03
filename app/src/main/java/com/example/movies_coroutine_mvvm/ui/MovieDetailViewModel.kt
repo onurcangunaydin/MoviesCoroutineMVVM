@@ -1,9 +1,10 @@
 package com.example.movies_coroutine_mvvm.ui
 
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.movies_coroutine_mvvm.data.model.Result
+import com.example.movies_coroutine_mvvm.data.model.Movie
 import com.example.movies_coroutine_mvvm.repository.MoviesRepository
 import com.example.movies_coroutine_mvvm.util.Resource
 import kotlinx.coroutines.launch
@@ -12,20 +13,28 @@ import retrofit2.Response
 class MovieDetailViewModel(private val repository: MoviesRepository) : ViewModel() {
 
 
-    val movieDetail: MutableLiveData<Resource<Result>> = MutableLiveData()
+    val movieDetail: MutableLiveData<Resource<Movie>> = MutableLiveData()
 
     fun getDetailMovies(id: Int?) = viewModelScope.launch {
         movieDetail.postValue(Resource.Loading())
-        val response = repository.getMoviesDetail(id)
-        movieDetail.postValue(handleMovieDetailResponse(response))
+        if (id != null){
+            val response = repository.getMovieDetail(id)
+            movieDetail.postValue(handleMovieDetailResponse(response))
+        }else{
+            Log.e(TAG,"Detail Id null")
+        }
     }
 
-    private fun handleMovieDetailResponse(response: Response<Result>): Resource<Result>{
+    private fun handleMovieDetailResponse(response: Response<Movie>): Resource<Movie>{
         if (response.isSuccessful) {
             response.body()?.let {resultResponse ->
                 return Resource.Success(resultResponse)
             }
         }
         return Resource.Error(response.message())
+    }
+
+    companion object{
+        const val TAG = "MovieDetailViewModel"
     }
 }

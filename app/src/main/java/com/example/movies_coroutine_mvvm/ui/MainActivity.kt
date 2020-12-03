@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import com.example.movies_coroutine_mvvm.R
+import com.example.movies_coroutine_mvvm.data.model.Movie
 import com.example.movies_coroutine_mvvm.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity(){
@@ -18,6 +19,12 @@ class MainActivity : AppCompatActivity(){
         ft.add(R.id.fragment_container,MoviesFragment.newInstance())
         ft.addToBackStack(null)
         ft.commit()
+    }
+
+    fun navigateMovieDetail(selectedMovie: Movie) {
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.fragment_container,MovieDetailFragment.newInstance(selectedMovie))
+            .commit()
     }
 }
 
