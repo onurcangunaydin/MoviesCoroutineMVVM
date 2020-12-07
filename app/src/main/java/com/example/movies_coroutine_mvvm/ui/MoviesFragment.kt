@@ -7,7 +7,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
@@ -31,6 +30,19 @@ class MoviesFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        setViewModel()
+        binding.rvMovie.layoutManager = GridLayoutManager(activity,2)
+        adapter = MoviesAdapter {
+            navigateToMovieDetailFragment(it)
+        }
+        binding.rvMovie.adapter = adapter
+    }
+
+    private fun navigateToMovieDetailFragment(movie: Movie) {
+        (requireActivity() as MainActivity).navigateMovieDetail(movie)
+    }
+
+    private fun setViewModel () {
 
         val viewModelFactory = ViewModelFactory(MoviesRepository())
         viewModel = ViewModelProvider(this,viewModelFactory).get(MovieViewModel::class.java)
@@ -45,17 +57,6 @@ class MoviesFragment : Fragment() {
             val movieList =  it.data?.movies?: emptyList()
             adapter.submitList(movieList)
         })
-
-        binding.rvMovie.layoutManager = GridLayoutManager(activity,2)
-        adapter = MoviesAdapter {
-            navigateToMovieDetailFragment(it)
-        }
-
-        binding.rvMovie.adapter = adapter
-    }
-
-    private fun navigateToMovieDetailFragment(movie: Movie) {
-        (requireActivity() as MainActivity).navigateMovieDetail(movie)
     }
 
 
